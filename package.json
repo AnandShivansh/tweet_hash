@@ -1,0 +1,31 @@
+{
+  "name": "tweet-hash",
+  "version": "1.0.0",
+  "description": "First fullstack application project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andyhsh/tweet_hash.git"
+  },
+  "author": "Andy Ho",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andyhsh/tweet_hash/issues"
+  },
+  "homepage": "https://github.com/andyhsh/tweet_hash#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.2",
+    "express-session": "^1.15.1",
+    "mongoose": "^4.8.6",
+    "morgan": "^1.8.1",
+    "passport": "^0.3.2",
+    "pug": "^2.0.0-beta11",
+    "socket.io": "^1.7.3",
+    "twit": "^2.2.5"
+  }
+}
