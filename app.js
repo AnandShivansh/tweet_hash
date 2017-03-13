@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
-var twitterApiKey = require('./config.json');
+var apiKey = require('./config.json');
 
 
 
@@ -21,20 +21,35 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
 // Create twit object
 var Twit = require('twit');
 
 var T = new Twit({
-  consumer_key:         twitterApiKey.twitter.consumerKey,
-  consumer_secret:      twitterApiKey.twitter.consumerSecret,
-  access_token:         twitterApiKey.twitter.accessToken,
-  access_token_secret: 	twitterApiKey.twitter.accessTokenSecret,
+  consumer_key:         apiKey.twitter.consumerKey,
+  consumer_secret:      apiKey.twitter.consumerSecret,
+  access_token:         apiKey.twitter.accessToken,
+  access_token_secret: 	apiKey.twitter.accessTokenSecret,
   timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 })
 
 app.get('/', function(req, res){
-	res.send(twitterApiKey);
+	
+	// 
+	//  filter the twitter public stream by the word 'mango'. 
+	// 
+	var stream = T.stream('statuses/filter', { track: 'mango' })
+ 
+	stream.on('tweet', function (tweet) {
+  	console.log(tweet);
+	})
+
 })
+
+
+
+
 
 
 // Create server
