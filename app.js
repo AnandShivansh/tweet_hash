@@ -21,7 +21,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Setup routes
+// var index = require('./controller/index');
+// var users = require('./controller/users')(app, passport);
 
+// Import routes
+// app.use('/', index);
+
+// Setup sessions
+app.use(session({ secret: 'tweetcount' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Create twit object
 var Twit = require('twit');
@@ -39,11 +49,13 @@ app.get('/', function(req, res){
 	// 
 	//  filter the twitter public stream by the word 'mango'. 
 	// 
-	var stream = T.stream('statuses/filter', { track: 'mango' })
+	// var stream = T.stream('statuses/filter', { track: 'mango' })
  
-	stream.on('tweet', function (tweet) {
-  	console.log(tweet);
-	})
+	// stream.on('tweet', function (tweet) {
+ //  	console.log(tweet);
+	// })
+
+	res.render('index');
 
 })
 

@@ -15,11 +15,11 @@ html {
 /*
  *  Header styling
  * * */
-.header {
+header {
   text-align: center;
 }
 
- .header h1{
+header h1{
   display: inline;
   vertical-align: middle;
   font-size: 50px;
@@ -43,18 +43,16 @@ html {
 /*
  *  Body styling
  * * */
-.body {
-  background-color: #FFFFFF;
+
+main {
+  background-color: white;
 }
-
-
-
 
 /*
  *  Footer styling
  * * */
 
-.footer {
+footer {
  text-align: center; 
  font-size: 12px;
  padding-top: 10px;
