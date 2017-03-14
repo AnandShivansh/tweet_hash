@@ -2,7 +2,7 @@ html {
   background-color: #1DA1F2;
 }
 
-/*
+/* * *
  * Global Styling
  * * */ 
 
@@ -12,7 +12,7 @@ html {
   padding-right: 0px;
 }
 
-/*
+/* * *
  *  Header styling
  * * */
 header {
@@ -42,7 +42,7 @@ header h1{
 }
 
 
-/*
+/* * *
  *  Body styling
  * * */
 
@@ -50,11 +50,16 @@ main {
   background-color: white;
 }
 
-.form-inline {
-  text-align: center;
+
+/* Hashtag List styling */
+#hashtagList {
+  border-radius: 5px;
+  background-color: #F5F8FA;
+  
 }
 
-/*
+
+/* * *
  *  Footer styling
  * * */
 
@@ -66,9 +71,13 @@ footer {
 }
 
 
-/*
+/* * *
  *  Search form styling
  * * */
+
+ .form-inline {
+  text-align: center;
+}
 
 #custom-search-input {
         margin:0;
@@ -111,7 +120,7 @@ footer {
 
 
 
-/*
+/* * *
  *  Login form styling
  * * */
 

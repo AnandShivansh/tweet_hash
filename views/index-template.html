@@ -6,13 +6,15 @@
 		<!-- Bootstrap core CSS -->
     	<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen">
     	<link rel="stylesheet" type="text/css" href="../public/css/style.css">
+    	<link href='https://fonts.googleapis.com/css?family=Open+Sans|Roboto', rel="stylesheet">
 	</head>
 
 	<body>
 		<div class="container-fluid global">
 			
 			<!----Header---->
-			<div class="row header">
+			<header>
+			<div class="row">
 				<div class="col-md-12">
 							<img class="twitterLogo" src="../public/images/Twitter_Logo_White_On_Blue/Twitter_Logo_White_On_Blue.png" height="100" width="100">
 
@@ -22,20 +24,25 @@
 	
 				</div>
 			</div>
+			</header>
 
 			<!----Body---->
-			<div class="container-fluid body">
+			<main>
 
 				<!----Search Form---->
 				<form action="/hashtag" method="POST" class="form-inline">
 				  <div class="form-group">
 				    <div class="input-group">
-				      <input name="hashtag" type="text" class="form-control" placeholder="Amount">
+				      <input name="hashtag" type="text" class="form-control" placeholder="Hashtag">
 				    </div>
 				  </div>
 				  <button type="submit" class="btn btn-primary">Add</button>
 				</form>
 
+				<!----Hashtag list placeholder---->
+				<div class="row" id="hashtagsList" >
+
+				</div>
 				<!----Login Form---->
 				<div class="row">
 					<form class="form-signin mg-btm">
@@ -70,14 +77,19 @@
 					</div>
 			      </form>
 				</div>
-				</div>		
+			</main>	
 
 			<!----Footer---->
-			<div class="row footer">
+			<footer>
+			<div class="row">
 				<div class="col-md-12">
 					<p>Andy Ho © 2017</p>
 				</div>
 			</div>
+			</footer>
+
+			<!---JS---->
+			<script src="../public/js/main.js"></script>
 
 		</div>
 	</body>
