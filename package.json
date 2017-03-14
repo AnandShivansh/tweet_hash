@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/andyhsh/tweet_hash#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.15.2",
@@ -24,6 +25,7 @@
     "mongoose": "^4.8.6",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
+    "passport-twitter": "^1.0.4",
     "pug": "^2.0.0-beta11",
     "socket.io": "^1.7.3",
     "twit": "^2.2.5"

@@ -8,8 +8,11 @@ var passport = require('passport');
 var apiKey = require('./config.json');
 
 
-
 var app = express();
+
+// Connect with MongoDB
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/tweetcount');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,18 +23,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Setup routes
-// var index = require('./controller/index');
-// var users = require('./controller/users')(app, passport);
-
-// Import routes
-// app.use('/', index);
+//app.use(cookieSession()); 
 
 // Setup sessions
 app.use(session({ secret: 'tweetcount' }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Setup strategies
+//require('./passport/local')(passport);
+require('./passport/twitter')(passport);
+
+// Setup routes
+var users = require('./controller/user')(app, passport);
+var hashtags = require('./controller/hashtags')(app);
 
 // Create twit object
 var Twit = require('twit');
@@ -44,22 +49,14 @@ var T = new Twit({
   timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 })
 
+// Routes
 app.get('/', function(req, res){
-	
-	// 
-	//  filter the twitter public stream by the word 'mango'. 
-	// 
-	// var stream = T.stream('statuses/filter', { track: 'mango' })
- 
-	// stream.on('tweet', function (tweet) {
- //  	console.log(tweet);
-	// })
-
 	res.render('index');
-
 })
 
-
+app.get('/search', function(req, res){
+	res.render('search');
+})
 
 
 

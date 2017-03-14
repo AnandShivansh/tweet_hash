@@ -23,6 +23,8 @@ header h1{
   display: inline;
   vertical-align: middle;
   font-size: 50px;
+  font-family: 'Roboto';
+  font-weight: 600;
  }
 
 
@@ -46,6 +48,10 @@ header h1{
 
 main {
   background-color: white;
+}
+
+.form-inline {
+  text-align: center;
 }
 
 /*

@@ -1,0 +1,10 @@
+extends layout
+
+block content
+	main
+		// --Search Form--
+		form.form-inline(action='/hashtag', method='POST')
+			.form-group
+				.input-group
+					input.form-control(name='hashtag', type='text', placeholder='Hashtag')
+			button.btn.btn-primary(type='submit') Add
