@@ -8,16 +8,18 @@ var Dashboard = function(){
 	var hashtags = [];
 
 	//Hashtags list section
-	var hashtagsList = $('#hashtagsList').html();
+	var hashtagTemplate = $('#hashtagTemplate').html();
 
 	//Rendering
 	function render(){
 		console.log('render ok');
-		console.log(hashtagsList);
 
+		$('#hashtagsList').html('');
 		//append user hashtags to list
 		hashtags.forEach(function(hashtag){
-			console.log(hashtag.tag);
+			var hashtagHTML = hashtagTemplate;
+			hashtagHTML = hashtagHTML.replace("{{hashtagName}}", hashtag.tag);
+			$('#hashtagsList').append(hashtagHTML);
 
 		});
 
@@ -85,12 +87,13 @@ var Dashboard = function(){
 				console.log('ajax post ok: ', data);
 
 				//reset input field
-				$('#hastagName').val('');
-
+				$('#hashtagName').val('');
+				listHashtags();
 			//Ajax post request to initiate Twitter REST API search (past 7 days)
 
 
 			})
+
 		}
 	}
 

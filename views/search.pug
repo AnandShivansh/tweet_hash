@@ -6,13 +6,15 @@ block content
 		form.form-inline(action='/hashtag', method='POST')
 			.form-group
 				.input-group
-					input#hashtagName.form-control(name='hashtag', type='text', placeholder='Hashtag')
+					input#hashtagName.form-control(name='hashtag', type='text', placeholder='#Hashtag')
 			button#addHashtag.btn.btn-primary(type='submit') Add
-		// --Hashtag list--
-		.row#hashtagsList
-			ul
-				li nike
-				li adidas
-				li puma
+		// --Hashtags list--
+		.row#hashtagsBox
+			ul#hashtagsList
+
+
+		// --Hashtag list template--
+		script#hashtagTemplate(type='text/x-custom-template')
+			li {{hashtagName}}
 
 	

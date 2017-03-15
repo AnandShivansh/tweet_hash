@@ -52,12 +52,12 @@ main {
 
 
 /* Hashtag List styling */
-#hashtagsList {
+#hashtagsBox {
   text-align: center;
   padding: 1em;
 }
 
-#hashtagsList ul li {
+#hashtagsBox ul li {
   display: inline;
   padding: 0.3em 0.5em;
   margin-left: 0.5em;
@@ -85,6 +85,8 @@ footer {
 
  .form-inline {
   text-align: center;
+  padding-top: 2em;
+  padding-bottom: 1em;
 }
 
 #custom-search-input {

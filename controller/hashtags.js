@@ -5,7 +5,10 @@ module.exports = function(app){
 
 	// Read hashtags route
 	app.get('/hashtag', function(req, res){
-		Hashtag.find({'users': req.user['_id']}, function(err, hashtag){
+
+		var userIdProp = req.user['_id'];
+
+		Hashtag.find({'users': userIdProp}, function(err, hashtag){
 			if (err){
 				return console.log('mongodb find function error', err);
 			}
@@ -15,10 +18,6 @@ module.exports = function(app){
 
 	// Create hashtag route
 	app.post('/hashtag', function(req, res){
-
-		console.log(req.body);
-	
-
 
 		//Normalise hashtag inputted by User
 		var tagProp = req.body.tag.toLowerCase();
