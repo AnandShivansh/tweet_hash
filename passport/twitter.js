@@ -27,13 +27,7 @@ module.exports = function(passport) {
 
   	function(token, tokenSecret, profile, cb) {
 
-  		console.log('####### profile #######', profile);
-
   		var userEmail = profile.emails[0].value;
-  		console.log('****** Twitter Profile ********\n', profile);
-  		console.log('email: ', userEmail);
-  		console.log('token: ', token);
-  		console.log('tokenSecret: ', tokenSecret);
 
 				User.findOne( {'email' : userEmail}, function(err, user){
 					//If User email does not exist in the database, create new User and save into DB

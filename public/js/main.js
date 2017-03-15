@@ -65,7 +65,6 @@ var Dashboard = function(){
 
 			render();
 		});
-
 	}
 
 	//Create hashtag

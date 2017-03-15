@@ -8,6 +8,7 @@ module.exports = function(app){
 
 		var userIdProp = req.user['_id'];
 
+		//find all hashtags that the user has inputted
 		Hashtag.find({'users': userIdProp}, function(err, hashtag){
 			if (err){
 				return console.log('mongodb find function error', err);
@@ -21,6 +22,12 @@ module.exports = function(app){
 
 		//Normalise hashtag inputted by User
 		var tagProp = req.body.tag.toLowerCase();
+		var firstInputChar = tagProp.charAt(0);
+
+		if (firstInputChar !== '#'){
+			tagProp = '#' + tagProp;
+		}
+
 		var userIdProp = req.user['_id'];
 
 		//Check if hashtag is already in the database
@@ -46,6 +53,9 @@ module.exports = function(app){
 
 					hashtag.users.push(userIdProp);	
 					hashtag.save(function(err, hashtag){ 
+						if(err){
+							return console.log(err);
+						}
 						console.log('new user pushed to hashtag.users array');
 						res.json(hashtag);
 					});
@@ -64,6 +74,10 @@ module.exports = function(app){
 				//add user as property
 				newHashtag.users.push(userIdProp);
 
+				//
+				//Initiate twitter search api
+				//
+
 				//save hashtag to DB
 				newHashtag.save(function(err, hashtag){
 					if(err){
@@ -72,12 +86,7 @@ module.exports = function(app){
 					console.log('hashtag saved: ', newHashtag);
 					res.json(newHashtag);
 				})
-
 			}
-
-
 		})
-
-
 	})
 };

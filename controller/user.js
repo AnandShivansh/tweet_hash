@@ -8,7 +8,7 @@ module.exports = function(app, passport){
 	// Login
 	app.post('/', passport.authenticate('local-login', {
 		//when user is found and password is matched
-		successRedirect : '/secret',
+		successRedirect : '/dashboard',
 		failureRedirect : '/error'
 	}));
 
@@ -19,10 +19,10 @@ module.exports = function(app, passport){
  	});
 
 	// Secret
-	app.get('/secret', function(req, res){
+	app.get('/dashboard', function(req, res){
 		console.log('***console logging req.user:*** \n' + req.user);
 		if(req.user){
-		res.render('secret', {});
+		res.render('dashboard', {});
 		} else {
 		res.send('please login');
 		}
@@ -32,7 +32,7 @@ module.exports = function(app, passport){
 	app.get('/auth/twitter', passport.authenticate('twitter'));
 
 	app.get('/auth/twitter/callback', passport.authenticate('twitter', {
-		successRedirect: '/search',
+		successRedirect: '/dashboard',
 		failureRedirect: '/error'
 	}));
 
