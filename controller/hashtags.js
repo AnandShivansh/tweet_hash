@@ -3,11 +3,25 @@ var Hashtag = require('../models/hashtag');
 
 module.exports = function(app){
 
+	// Read hashtags route
+	app.get('/hashtag', function(req, res){
+		Hashtag.find({'users': req.user['_id']}, function(err, hashtag){
+			if (err){
+				return console.log('mongodb find function error', err);
+			}
+			res.json(hashtag);
+		})
+	})
+
 	// Create hashtag route
 	app.post('/hashtag', function(req, res){
+
+		console.log(req.body);
 	
+
+
 		//Normalise hashtag inputted by User
-		var tagProp = req.body.hashtag.toLowerCase();
+		var tagProp = req.body.tag.toLowerCase();
 		var userIdProp = req.user['_id'];
 
 		//Check if hashtag is already in the database
@@ -34,6 +48,7 @@ module.exports = function(app){
 					hashtag.users.push(userIdProp);	
 					hashtag.save(function(err, hashtag){ 
 						console.log('new user pushed to hashtag.users array');
+						res.json(hashtag);
 					});
 
 					
@@ -56,6 +71,7 @@ module.exports = function(app){
 						return console.log(err);
 					}
 					console.log('hashtag saved: ', newHashtag);
+					res.json(newHashtag);
 				})
 
 			}

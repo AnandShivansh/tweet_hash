@@ -52,10 +52,18 @@ main {
 
 
 /* Hashtag List styling */
-#hashtagList {
+#hashtagsList {
+  text-align: center;
+  padding: 1em;
+}
+
+#hashtagsList ul li {
+  display: inline;
+  padding: 0.3em 0.5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  background-color:#E1E8ED;
   border-radius: 5px;
-  background-color: #F5F8FA;
-  
 }
 
 
