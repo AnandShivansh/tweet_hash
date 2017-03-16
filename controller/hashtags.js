@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Hashtag = require('../models/hashtag');
+var tweet = require('../controller/tweets');
 
 module.exports = function(app){
 

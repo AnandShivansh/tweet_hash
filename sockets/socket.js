@@ -1,14 +1,32 @@
+var tweet = require('../controller/tweets');
+
+
 module.exports = function(io){
 	console.log('server side socket connected');
 		
+	var usersConnected = 0;
+
 	// Add a connect listener
 	io.on('connection', function(socket){
-	  console.log('a user connected');
-	
+		
+		usersConnected++;
 
+	 	//Emit number of users connected to client
+		io.sockets.emit('users', { description: usersConnected + ' users conneceted'});
+	  	
+		//Emit object to client
+		//socket.emit('fromServer', { description: 'A custom event named testerEvent!'});
+		
+		//Listening for event from client
+		// socket.on('fromClient', function(msg){
+		// 	console.log(msg);
+		// });
+		
 	    // Disconnect listener
 	    socket.on('disconnect', function() {
-	        console.log('Client disconnected.');
+	        usersConnected--;
+	        io.sockets.emit('users', { description: usersConnected + ' users left'});
+
 	    });
 
     

@@ -3,7 +3,8 @@ var Tweet = require('../models/tweet');
 var Hashtag = require('../models/hashtag');
 var apiKey = require('../config.json');
 
-module.exports = function(app){
+
+exports.twitterStream = function() {
 
 	console.log('connected to tweet controller');
 
@@ -19,8 +20,19 @@ module.exports = function(app){
 	  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 	})
 
-	 //filter twitter hashtags public stream from DB
-	var hashtagFilter = ['#nike', '#tesla','#adidas','#google'];
+	//Set hashtagFilter 
+	var hashtagFilter;
+
+	// Retrieve all hashtag.tag from DB
+	Hashtag.distinct('tag', function(err, hashtags){
+		if (err) {
+			return console.log(err);
+		}
+		//filter twitter hashtags public stream from DB
+		hashtagFilter = hashtags;
+	});
+
+	//console.log(hashtagFilter);
 
 	//Default twitterStream to false when no hashtags are stored
 	// if (hashtagFilter === []){
@@ -29,10 +41,10 @@ module.exports = function(app){
 	// 	twitterStream = true;
 	// }
 
-	var twitterStream = true;	
+	this.on = true;	
 
 	//When twitterstream init, start streaming
-	if(twitterStream){
+	if(this.on){
 		console.log('streaming tweets....');
 
 		var stream = T.stream('statuses/filter', { track: hashtagFilter })
@@ -60,8 +72,7 @@ module.exports = function(app){
 
 					//loop through all matching hashtags
 					matchingHashtag.forEach(function(hashtag){
-						console.log('matching hatchtag obj: ', hashtag.tweets);
-
+			
 						//push tweets to matching hashtag
 						hashtag.tweets.push(newTweet);
 

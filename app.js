@@ -40,7 +40,7 @@ require('./passport/twitter')(passport);
 // Import controllers and routes
 var users = require('./controller/user')(app, passport);
 var hashtags = require('./controller/hashtags')(app);
-var tweet = require('./controller/tweets')(app);
+var tweet = require('./controller/tweets');
 
 
 // Routes
@@ -51,9 +51,6 @@ app.get('/', function(req, res){
 app.get('/dashboard', function(req, res){
 	res.render('dashboard');
 })
-
-
-
 
 // Create server
 server.listen(port, function () {
