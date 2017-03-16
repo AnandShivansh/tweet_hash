@@ -11,7 +11,7 @@ module.exports = function(io){
 	        console.log('Client disconnected.');
 	    });
 
-    });
+    
 		// //Listener for msg emit from client
 		// client.on('wdi:chat:msg', function(data){
 		// 	//io.emit('wdi:chat:newMsg', data); 			//broadcast to everyone
@@ -33,5 +33,5 @@ module.exports = function(io){
 		// client.on('wdi:user:reply', function(data){
 		// console.log(data);
 		// });
-
+	});	
 }

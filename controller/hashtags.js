@@ -24,6 +24,10 @@ module.exports = function(app){
 		var tagProp = req.body.tag.toLowerCase();
 		var firstInputChar = tagProp.charAt(0);
 
+		// while(tagProp.charAt(0) === '#'){
+		// 	tagProp = tagProp.substr(1);
+		// }
+
 		if (firstInputChar !== '#'){
 			tagProp = '#' + tagProp;
 		}
@@ -75,7 +79,7 @@ module.exports = function(app){
 				newHashtag.users.push(userIdProp);
 
 				//
-				//Initiate twitter search api
+				//Initiate twitter stream api
 				//
 
 				//save hashtag to DB

@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Tweet = require('../models/tweet');
+var Hashtag = require('../models/hashtag');
 var apiKey = require('../config.json');
 
 module.exports = function(app){
@@ -18,18 +19,17 @@ module.exports = function(app){
 	  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 	})
 
-
-	 //filter twitter hashtags public stream
-	var hashtagFilter = ['#nike', '#tesla', '#apple'];
+	 //filter twitter hashtags public stream from DB
+	var hashtagFilter = ['#nike', '#tesla','#adidas','#google'];
 
 	//Default twitterStream to false when no hashtags are stored
-	if (hashtagFilter === []){
-		twitterStream = false;
-	} else {
-		twitterStream = true;
-	}
+	// if (hashtagFilter === []){
+	// 	twitterStream = false;
+	// } else {
+	// 	twitterStream = true;
+	// }
 
-	var twitterStream = false;	
+	var twitterStream = true;	
 
 	//When twitterstream init, start streaming
 	if(twitterStream){
@@ -38,29 +38,43 @@ module.exports = function(app){
 		var stream = T.stream('statuses/filter', { track: hashtagFilter })
 		 
 		stream.on('tweet', function (tweet) {
-			console.log('*************incoming********\n', tweet,
-				'\n*********end*********');
 
-			//create tweet objects
-			// var newTweet = new Tweet();
-			// newTweet.tag = 
-			// newTweet.geo =
-			// newTweet.created =
+			//Exclude all tweets with undefined hashtag
+			//filter all hashtags out and concat #
+			if (tweet.entities.hashtags !== undefined){
+				var hashtagFilterNormalised = tweet.entities.hashtags.map(function(object){
+					return '#' + object.text.toLowerCase();
+				})	
+	
+				//create tweet objects
+				var newTweet = new Tweet();
+				newTweet.created = tweet.created_at
+				newTweet.tag = hashtagFilterNormalised;
 
-			//save incoming tweets to DB
-			// tweet.save(function(err, tweet){
-			// 	if(err){
-			// 		return console.log(err);
-			// 	}
-			// 	console.log('new tweet saved to DB');
-			// })
+				//check with matching hashtag name in mongodb => returns an ARRAY of all matching hashtags
+				Hashtag.find( {'tag': { $in: hashtagFilterNormalised } }, function(err, matchingHashtag){
+
+					if (err){
+						return console.log(err);
+					}
+
+					//loop through all matching hashtags
+					matchingHashtag.forEach(function(hashtag){
+						console.log('matching hatchtag obj: ', hashtag.tweets);
+
+						//push tweets to matching hashtag
+						hashtag.tweets.push(newTweet);
+
+						//save incoming tweet to DB
+						hashtag.save(function(err, hashtag){
+						if(err){
+							return console.log(err);
+						}
+						console.log('new tweet saved to DB');
+						})
+					})
+				})
+			}
 		})
-
-
 	}
-
-
-
-
-
 }
