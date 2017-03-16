@@ -3,59 +3,42 @@ var Tweet = require('../models/tweet');
 var Hashtag = require('../models/hashtag');
 var apiKey = require('../config.json');
 
+console.log("Hello from tweet controller");
 
-exports.twitterStream = function() {
+// Create twit object
+var Twit = require('twit');
 
-	console.log('connected to tweet controller');
+//Set api keys and tokens
+var T = new Twit({
+  consumer_key:         apiKey.twitter.consumerKey,
+  consumer_secret:      apiKey.twitter.consumerSecret,
+  access_token:         apiKey.twitter.accessToken,
+  access_token_secret: 	apiKey.twitter.accessTokenSecret,
+  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
+})
 
-	// Create twit object
-	var Twit = require('twit');
+exports.twitterStream = function(streaming, filter){
 
-	//Set api keys and tokens
-	var T = new Twit({
-	  consumer_key:         apiKey.twitter.consumerKey,
-	  consumer_secret:      apiKey.twitter.consumerSecret,
-	  access_token:         apiKey.twitter.accessToken,
-	  access_token_secret: 	apiKey.twitter.accessTokenSecret,
-	  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
-	})
+	var streamOn = streaming;
 
-	//Set hashtagFilter 
-	var hashtagFilter;
+	//When twitterStream init, start streaming
+	if(streamOn){
 
-	// Retrieve all hashtag.tag from DB
-	Hashtag.distinct('tag', function(err, hashtags){
-		if (err) {
-			return console.log(err);
-		}
-		//filter twitter hashtags public stream from DB
-		hashtagFilter = hashtags;
-	});
+		var hashtagFilter = filter;
+		
+		console.log('hashagfilter: ', filter);
 
-	//console.log(hashtagFilter);
-
-	//Default twitterStream to false when no hashtags are stored
-	// if (hashtagFilter === []){
-	// 	twitterStream = false;
-	// } else {
-	// 	twitterStream = true;
-	// }
-
-	this.on = true;	
-
-	//When twitterstream init, start streaming
-	if(this.on){
-		console.log('streaming tweets....');
-
-		var stream = T.stream('statuses/filter', { track: hashtagFilter })
+		var stream = T.stream('statuses/filter', { track: filter })
 		 
 		stream.on('tweet', function (tweet) {
+
+			console.log('streaming tweets....');
 
 			//Exclude all tweets with undefined hashtag
 			//filter all hashtags out and concat #
 			if (tweet.entities.hashtags !== undefined){
-				var hashtagFilterNormalised = tweet.entities.hashtags.map(function(object){
-					return '#' + object.text.toLowerCase();
+				var hashtagFilterNormalised = tweet.entities.hashtags.map(function(hashtag){
+					return '#' + hashtag.text.toLowerCase();
 				})	
 	
 				//create tweet objects
@@ -87,5 +70,7 @@ exports.twitterStream = function() {
 				})
 			}
 		})
+	} else {
+		console.log('Twitter Stream API turned off');
 	}
 }

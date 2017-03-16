@@ -37,11 +37,10 @@ app.use(passport.session());
 //require('./passport/local')(passport);
 require('./passport/twitter')(passport);
 
-// Import controllers and routes
+// Import controllers
 var users = require('./controller/user')(app, passport);
 var hashtags = require('./controller/hashtags')(app);
 var tweet = require('./controller/tweets');
-
 
 // Routes
 app.get('/', function(req, res){

@@ -25,10 +25,6 @@ module.exports = function(app){
 		var tagProp = req.body.tag.toLowerCase();
 		var firstInputChar = tagProp.charAt(0);
 
-		// while(tagProp.charAt(0) === '#'){
-		// 	tagProp = tagProp.substr(1);
-		// }
-
 		if (firstInputChar !== '#'){
 			tagProp = '#' + tagProp;
 		}
@@ -79,10 +75,6 @@ module.exports = function(app){
 				//add user as property
 				newHashtag.users.push(userIdProp);
 
-				//
-				//Initiate twitter stream api
-				//
-
 				//save hashtag to DB
 				newHashtag.save(function(err, hashtag){
 					if(err){
@@ -90,6 +82,17 @@ module.exports = function(app){
 					}
 					console.log('hashtag saved: ', newHashtag);
 					res.json(newHashtag);
+
+					//Retrieve all hashtags from DB
+					Hashtag.distinct('tag', function(err, hashtagFilter){
+						if(err){
+							return console.log(err);
+						}
+						
+						//Initiate twitter stream api
+						tweet.twitterStream(true, hashtagFilter);
+
+					});
 				})
 			}
 		})
