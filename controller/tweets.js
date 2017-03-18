@@ -27,7 +27,8 @@ exports.twitterStream = function(filter){
 		stream.stop();
 		console.log('Stream stop and restarting with new filter');
 	}
-	stream = T.stream('statuses/filter', { track: filter })
+
+	stream = T.stream('statuses/filter', { track: filter });
 
 	//When twitterStream init, start streaming
 	stream.on('tweet', function (tweet) {
@@ -49,7 +50,8 @@ exports.twitterStream = function(filter){
 	
 				//create tweet objects
 				var newTweet = new Tweet();
-				newTweet.created = tweet.created_at;
+				var tweetDate = tweet.created_at.substring(4,10);
+				newTweet.created = tweetDate;
 				newTweet.text = tweet.text;
 				newTweet.tag = hashtagFilterNormalised;
 
@@ -76,8 +78,6 @@ exports.twitterStream = function(filter){
 					})
 				})
 			}
-		} else {
-		console.log('Twitter Stream API turned off');
-	}
+		}
 	})
 }
