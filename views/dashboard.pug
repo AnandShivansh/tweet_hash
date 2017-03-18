@@ -10,13 +10,16 @@ block content
 			button#addHashtag.btn.btn-primary(type='submit') Add
 		// --Hashtags list--
 		.row#hashtagsBox
-			ul#hashtagsList
 
 
 		// --Hashtag list template--
 		script#hashtagTemplate(type='text/x-custom-template')
-			li {{hashtagName}}
+			.hashtag(data-id='{{id}}') {{hashtagName}}
+				button.btn.btn-default.deleteButton(type='button')
+					span.glyphicon.glyphicon-trash(aria-hidden='true')
 
 	script(src='/js/main.js')
+
+	
 	
 	

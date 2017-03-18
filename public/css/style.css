@@ -51,19 +51,36 @@ main {
 }
 
 
+.glyphicon {
+  font-size: 75%;
+}
+
+.btn-default {
+  padding: 0;
+  margin-left: 5px;
+  border: 0px;
+  background-color: #E1E8ED;
+  display: none;
+}
+
 /* Hashtag List styling */
 #hashtagsBox {
   text-align: center;
   padding: 1em;
 }
 
-#hashtagsBox ul li {
-  display: inline;
+.hashtag {
+  display: inline-block;
   padding: 0.3em 0.5em;
   margin-left: 0.5em;
   margin-right: 0.5em;
+  margin-bottom: 0.5em;
   background-color:#E1E8ED;
-  border-radius: 5px;
+  border-radius: 10px;
+}
+
+.hashtag:hover .btn-default {
+  display: inline;
 }
 
 /* * *

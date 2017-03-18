@@ -14,13 +14,13 @@ var Dashboard = function(){
 	function render(){
 		console.log('render ok');
 
-		$('#hashtagsList').html('');
+		$('#hashtagsBox').html('');
 		//append user hashtags to list
 		hashtags.forEach(function(hashtag){
 			var hashtagHTML = hashtagTemplate;
 			hashtagHTML = hashtagHTML.replace("{{hashtagName}}", hashtag.tag);
-			$('#hashtagsList').append(hashtagHTML);
-
+			hashtagHTML = hashtagHTML.replace("{{id}}", hashtag._id);
+			$('#hashtagsBox').append(hashtagHTML);
 		});
 
 	}
@@ -52,6 +52,7 @@ var Dashboard = function(){
 	//Read hashtags
 	function listHashtags(){
 
+		console.log('listhashtag function init');
 		//Ajax get request to /hashtag route
 		ajaxCall('/hashtag', 'GET', {}, function(err, data){
 			if (err){
@@ -81,13 +82,15 @@ var Dashboard = function(){
 			//Ajax post request to /hashtag route to add to DB
 			ajaxCall('/hashtag', 'POST', newHashtag, function(err, data){
 				if(err){
-					return console.log(err);
+					return console.log('ajax post error', err);
 				}
 				console.log('ajax post ok: ', data);
 
 				//reset input field
 				$('#hashtagName').val('');
 				listHashtags();
+
+			
 			//Ajax post request to initiate Twitter REST API search (past 7 days)
 
 
@@ -97,12 +100,27 @@ var Dashboard = function(){
 	}
 
 	//Delete hashtag
+	function deleteHashtag(event){
+		event.preventDefault();
+
+		var hashtagElement = event.target.parentNode.parentNode;
+
+		var id = encodeURIComponent(hashtagElement.textContent);
+
+		console.log(id);
 
 		//AJAX post request to /hashtag route to 
-		//delete hashtag and all tweets from DB
+		//delete hashtag from DB
+		ajaxCall('/hashtag/' + id, 'DELETE', {}, function(err, data){
+			if (err){
+				return console.log('ajax delete err: ', err);
+			}
 
-
-
+			console.log('ajax delete ok', data);
+			listHashtags();
+			console.log(listHashtags);
+		})
+	}
 
 	function eventListeners(){
 
@@ -110,7 +128,7 @@ var Dashboard = function(){
 		$('#addHashtag').on('click keypress', addHashtag);
 
 		//Delete hashtag
-		//$('#hashtagsList').on('click', '.deleteHashtag', deleteHashtag);
+		$('#hashtagsBox').on('click', '.deleteButton', deleteHashtag);
 
 	}
 

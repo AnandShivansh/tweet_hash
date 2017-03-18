@@ -18,6 +18,33 @@ module.exports = function(app){
 		})
 	})
 
+	// Delete hashtag route
+	app.delete('/hashtag/:id', function(req, res){
+
+		//Retrieve hashtag user clicked on
+		var id = decodeURIComponent(req.params.id);
+		
+		//Delete hashtag from DB
+		Hashtag.remove({'tag': id}, function(err, hashtag){
+			if(err){
+				return console.log(err);
+			}
+			console.log('Removed hashtag from db');
+			res.json(hashtag);
+
+			//Update Twitter Stream hashtag filter
+			Hashtag.distinct('tag', function(err, hashtagFilter){
+				if(err){
+					return console.log(err);
+				}
+
+				//Check if any hashtags to stream. If none, turn off stream
+				tweet.twitterStream(true, hashtagFilter);
+			})
+
+		})
+	})
+
 	// Create hashtag route
 	app.post('/hashtag', function(req, res){
 
@@ -88,7 +115,7 @@ module.exports = function(app){
 						if(err){
 							return console.log(err);
 						}
-						
+
 						//Initiate twitter stream api
 						tweet.twitterStream(true, hashtagFilter);
 

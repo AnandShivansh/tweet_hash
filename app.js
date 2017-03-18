@@ -51,7 +51,7 @@ app.get('/dashboard', function(req, res){
 	res.render('dashboard');
 })
 
-// Create server
+// Listen for server init
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
 })
