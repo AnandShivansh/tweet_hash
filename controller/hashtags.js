@@ -2,6 +2,11 @@ var mongoose = require('mongoose');
 var Hashtag = require('../models/hashtag');
 var tweet = require('../controller/tweets');
 
+
+
+
+var stream = null;
+
 module.exports = function(app){
 
 	// Read hashtags route
@@ -38,8 +43,9 @@ module.exports = function(app){
 					return console.log(err);
 				}
 
-				//Check if any hashtags to stream. If none, turn off stream
-				tweet.twitterStream(true, hashtagFilter);
+				//Close twitter stream api if open, and reopen with new hashtag filter
+				console.log('hashtagfilter from mongoose: ', hashtagFilter);
+				tweet.twitterStream(hashtagFilter);
 			})
 
 		})
@@ -116,8 +122,9 @@ module.exports = function(app){
 							return console.log(err);
 						}
 
-						//Initiate twitter stream api
-						tweet.twitterStream(true, hashtagFilter);
+						//Close twitter stream api if open, and reopen with new hashtag filter
+						console.log('hashtagfilter from mongoose: ', hashtagFilter);
+						tweet.twitterStream(hashtagFilter);
 
 					});
 				})

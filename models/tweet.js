@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var tweetSchema = new mongoose.Schema({
 	tag: Array,
+	text: String,
 	created: String
 });
 

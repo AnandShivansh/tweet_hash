@@ -17,22 +17,28 @@ var T = new Twit({
   timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 })
 
-exports.twitterStream = function(streaming, filter){
+var filter = [];
 
-	var streamOn = streaming;
+var stream = null;
+
+exports.twitterStream = function(filter){
+
+	if (stream !== null){
+		stream.stop();
+		console.log('Stream stop and restarting with new filter');
+	}
+	stream = T.stream('statuses/filter', { track: filter })
 
 	//When twitterStream init, start streaming
-	if(streamOn){
+	stream.on('tweet', function (tweet) {
 
-		var hashtagFilter = filter;
-		
-		console.log('hashagfilter: ', filter);
-
-		var stream = T.stream('statuses/filter', { track: filter })
-		 
-		stream.on('tweet', function (tweet) {
+		if(filter !== []){
 
 			console.log('streaming tweets....');
+
+			console.log('tweet hashtags: ', tweet.entities.hashtags);
+
+			console.log('hashtagfilter: ', filter);
 
 			//Exclude all tweets with undefined hashtag
 			//filter all hashtags out and concat #
@@ -43,7 +49,8 @@ exports.twitterStream = function(streaming, filter){
 	
 				//create tweet objects
 				var newTweet = new Tweet();
-				newTweet.created = tweet.created_at
+				newTweet.created = tweet.created_at;
+				newTweet.text = tweet.text;
 				newTweet.tag = hashtagFilterNormalised;
 
 				//check with matching hashtag name in mongodb => returns an ARRAY of all matching hashtags
@@ -69,8 +76,8 @@ exports.twitterStream = function(streaming, filter){
 					})
 				})
 			}
-		})
-	} else {
+		} else {
 		console.log('Twitter Stream API turned off');
 	}
+	})
 }
