@@ -74,6 +74,9 @@ exports.twitterStream = function(filter){
 							return console.log(err);
 						}
 						console.log('new tweet saved to DB');
+
+						//invoked function to initiate sock.emit?
+
 						})
 					})
 				})
