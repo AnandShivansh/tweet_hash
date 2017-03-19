@@ -1,9 +1,6 @@
 //When user is logged in
 var Dashboard = function(){
 
-	//Initiate Twitter Stream API
-
-
 	//Hashtag array
 	var hashtags = [];
 
@@ -128,8 +125,10 @@ var Dashboard = function(){
 		$('#addHashtag').on('click keypress', addHashtag);
 
 		//Delete hashtag
-		$('#hashtagsBox').on('click', '.deleteButton', deleteHashtag);
-
+		$('#hashtagsBox').on('click', '.deleteButton', function(event){
+			deleteHashtag(event);
+			deleteDataset(event);
+		});
 	}
 
 	function init(){
