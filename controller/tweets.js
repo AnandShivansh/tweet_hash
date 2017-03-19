@@ -50,8 +50,7 @@ exports.twitterStream = function(filter, io){
 	
 				//create tweet objects
 				var newTweet = new Tweet();
-				var tweetDate = tweet.created_at.substring(4,10);
-				newTweet.created = tweetDate;
+				newTweet.created = tweet.created_at;
 				newTweet.text = tweet.text;
 				newTweet.tag = hashtagFilterNormalised;
 
@@ -74,7 +73,15 @@ exports.twitterStream = function(filter, io){
 							return console.log(err);
 						}
 						console.log('new tweet saved to DB');
-						io.emit('newTweet', newTweet);
+
+						//emit new Data to client side
+						response = {
+							matchingHashtag: hashtag.tag,
+							tweet: newTweet
+						}
+
+						io.emit('newData', response);
+
 						})
 					})
 				})

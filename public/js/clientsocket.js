@@ -6,9 +6,8 @@ $(function(){
 	console.log('client side socket connected');
 
 	//Listening for new tweets
-	socket.on('newTweet', function(newTweet){
-		console.log('received tweet: ', newTweet);
-		//updateData(newTweet);
+	socket.on('newData', function(response){
+		updateData(response);
 	})
 
 	//Listening for hashtags to track
@@ -49,16 +48,18 @@ $(function(){
 	});
 
     //update Data whenever incoming tweet saved
-    function updateData(newTweet){
-    	console.log('update data: ', newTweet);
+    function updateData(response){
+    	console.log('update data: ', response);
+
     	// Loop over array to match hashtag with label and update data
     	// data.labels[i] = 
     	// data.datasets[i].label =
     	// data.datasets.data[i] =
-
+    	// lineChart.update();
     }
 
-    function addDataset(newTweet){
+    //
+    function initChart(newTweet){
     	console.log('add dataset: ', newTweet);
     	//new dataset
     	var newDataset = {
@@ -68,6 +69,10 @@ $(function(){
     		// data:
     	}
     	data.datasets.push(newDataset);
+    }
+
+    function addDataset(hashtag){
+
     }
 
     function deleteDataset(hashtag){
