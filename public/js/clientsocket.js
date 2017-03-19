@@ -19,23 +19,34 @@ $(function(){
 // ChartJS
 //var Chart = function(){
 
+var currentLabels = [];
+    
+    var generateLabel = function(time){
+        var locale = "en-us";
+        var month = date.toLocaleString(locale, { month: "short" });
+        var day = date.getDate().toString();
+        var hour = date.getHours().toString();
+        var min = date.getMinutes().toString();
+        min = (Math.round(min/5) * 5) % 60;
+        if (min.toString().length == 1){
+            min = '0' + min
+        }
+        hour = min > 52 ? (hour === 23 ? 0 : ++hour) : hour;
+        var label = month + " " + day + " " + hour + ":" + min;
+        return label;
+    }
+    
+    var date = new Date();
+    
+    for(var i = 0; i<10; i++){
+        currentLabels.push(generateLabel(date));    
+        date.setMinutes(date.getMinutes() + 15);
+    }
+    
+    
     var data = {
-        labels: ['Feb 3', 'Feb 4', 'Feb 5', 'Feb 6', 'Feb 7', 'Feb 8', 'Feb 9', 'Feb 10', 'Feb 11', 'Feb 12', 'Feb 13', 'Feb 14', 'Feb 15', 'Feb 16', 'Feb 17', 'Feb 18', 'Feb 19', 'Feb 20', 'Feb 21', 'Feb 22'],
-        datasets: [
-            // {
-            //     // label: "#nike", //generated from clicking on hashtag
-            //     // borderColor: randomColor(), //math random on init
-            //     // fill: false,
-            //     // data: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 10, 8, 5, 7, 11, 13, 17, 19, 23, 29]
-            // },
-            // {
-            //     // label: "#adidas",
-            //     // backgroundColor: "rgba(255,149,36,0.2)",
-            //     // borderColor: randomColor(),
-            //     // fill: false,
-            //     // data: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 25, 20, 10, 2, 3, 5, 8, 13, 21, 34]
-            // }
-        ]
+        labels: currentLabels,
+        datasets: []
     };
 
     var ctx = $('#lineChart');
@@ -76,16 +87,7 @@ $(function(){
     	})
     }
 
-	// var date = new Date('Sun Feb 10 17:22:56 +0000 2017');
 
-	// var locale = "en-us";
-	// var month = date.toLocaleString(locale, { month: "short" });
-	// var day = date.getDate().toString();
-	// var hour = date.getHours().toString();
-	// var min = date.getMinutes().toString();
-	// var label = month + " " + day + " " + hour + ":" + min;
-
-	// console.log(label)
 
     //Initiate chart on user login
     function initChart(){
@@ -108,6 +110,13 @@ $(function(){
     function addDataset(){
     	event.preventDefault();
 
+        // var newDataset = {
+        //     label: 
+        //     borderColor: randomColor(),
+        //     fill: false,
+        //     data: []
+        // }
+
     	console.log('add dataset', dashboard.hashtag);
     }
 
@@ -115,13 +124,13 @@ $(function(){
     	event.preventDefault();
     	var hashtagElement = event.target.parentNode.parentNode;
     	var hashtag = hashtagElement.textContent;
-    	console.log('delete dataset', hashtag);
 
         //loop through dataset, delete matching dataset
         lineChart.data.datasets.forEach(function(dataset, index){
             if(hashtag === dataset.label){
-                lineChart.data.datasets[index].splice(index, 1);
-                console.log('deleted dataset: ', lineChart.data.datasets[index]);
+                lineChart.data.datasets.splice(index, 1);
+                console.log('deleted dataset: ', lineChart.data.datasets);
+                lineChart.update();
             }
         })
     }

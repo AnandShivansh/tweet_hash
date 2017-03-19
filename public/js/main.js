@@ -93,7 +93,9 @@ var Dashboard = function(){
 				$('#hashtagName').val('');
 				listHashtags();
 
-			
+				//add dataset to chart
+				addDataset(event);
+
 			//Ajax post request to initiate Twitter REST API search (past 7 days)
 
 
@@ -130,7 +132,7 @@ var Dashboard = function(){
 		//Submit hashtag
 		$('#addHashtag').on('click keypress', function(event){
 			addHashtag(event);
-			addDataset(event);
+			
 		});
 
 		//Delete hashtag
