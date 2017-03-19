@@ -2,7 +2,7 @@
 var Dashboard = function(){
 
 	//Hashtag array
-	var hashtags = [];
+	this.hashtags = [];
 
 	//Hashtags list section
 	var hashtagTemplate = $('#hashtagTemplate').html();
@@ -122,7 +122,10 @@ var Dashboard = function(){
 	function eventListeners(){
 
 		//Submit hashtag
-		$('#addHashtag').on('click keypress', addHashtag);
+		$('#addHashtag').on('click keypress', function(event){
+			addHashtag(event);
+			addDataset(event);
+		});
 
 		//Delete hashtag
 		$('#hashtagsBox').on('click', '.deleteButton', function(event){
@@ -141,7 +144,5 @@ init();
 
 }
 
-$(document).ready(function(){
 	console.log('client side JS connected!');
 	var dashboard = new Dashboard();
-});

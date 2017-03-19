@@ -23,18 +23,17 @@ $(function(){
         labels: ['Feb 3', 'Feb 4', 'Feb 5', 'Feb 6', 'Feb 7', 'Feb 8', 'Feb 9', 'Feb 10', 'Feb 11', 'Feb 12', 'Feb 13', 'Feb 14', 'Feb 15', 'Feb 16', 'Feb 17', 'Feb 18', 'Feb 19', 'Feb 20', 'Feb 21', 'Feb 22'],
         datasets: [
             {
-                label: "#nike", //generated from clicking on hashtag
-                borderColor: randomColor(), //math random on init
-                fill: false,
-                //generate initial data pulled from DB
-                data: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 10, 8, 5, 7, 11, 13, 17, 19, 23, 29]
+                // label: "#nike", //generated from clicking on hashtag
+                // borderColor: randomColor(), //math random on init
+                // fill: false,
+                // data: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 10, 8, 5, 7, 11, 13, 17, 19, 23, 29]
             },
             {
-                label: "#adidas",
-                //backgroundColor: "rgba(255,149,36,0.2)",
-                borderColor: randomColor(),
-                fill: false,
-                data: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 25, 20, 10, 2, 3, 5, 8, 13, 21, 34]
+                // label: "#adidas",
+                // backgroundColor: "rgba(255,149,36,0.2)",
+                // borderColor: randomColor(),
+                // fill: false,
+                // data: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 25, 20, 10, 2, 3, 5, 8, 13, 21, 34]
             }
         ]
     };
@@ -47,37 +46,71 @@ $(function(){
 	    options: options
 	});
 
+	// response = {
+	// matchingHashtag: hashtag.tag,
+	// tweet: newTweet
+	// }
+
     //update Data whenever incoming tweet saved
     function updateData(response){
     	console.log('update data: ', response);
 
-    	// Loop over array to match hashtag with label and update data
-    	// data.labels[i] = 
-    	// data.datasets[i].label =
-    	// data.datasets.data[i] =
-    	// lineChart.update();
+    	var dataPoint = lineChart.data.datasets.data;
+
+		// Loop over array to match hashtag with label
+    	data.datasets.forEach(function(dataset, index){
+
+    		//update dataset for matching hashtag
+	    	if (dataset === response.matchingHashtag){
+		    	// lineChart.data.labels[i] = 
+		    	// lineChart.data.datasets[i].label =
+
+		    	//add count
+		    	dataPoint[dataPoint.length - 1]++
+		    	lineChart.update();
+	    	}
+    	})
+
+
     }
 
-    //
-    function initChart(newTweet){
-    	console.log('add dataset: ', newTweet);
+ //    function getAllDays() {
+	//     var s = new Date('start date');
+	//     var e = new Date('end date');
+	//     var a = [];
+	    
+	//     while(s < e) {
+	//         a.push(s);
+	//         s = new Date(s.setDate(
+	//             s.getDate() + 1
+	//         ))
+	//     }
+	//     return a;
+	// };	
 
-    	//hashtags user is tracking
-    	dashboard.hashtags
+    //Initiate chart on user login
+    function initChart(){
+    	console.log('init chart');
 
-    	//new dataset
-    	var newDataset = {
-    		// label:
-    		// borderColor: randomColor();
-    		// fill: false,
-    		// data:
-    	}
-    	data.datasets.push(newDataset);
+    	//Add dataset for each hashtag currently tracked
+    	dashboard.hashtags.forEach(function(hashtag){
+
+    		var newDataset = {
+	    		label: hashtag,
+	    		borderColor: randomColor(),
+	    		fill: false,
+	    		data: []
+    		}
+    		lineChart.data.datasets.push(newDataset);
+    		lineChart.update();
+    	})
     }
+
+    initChart();
 
     function addDataset(){
     	event.preventDefault();
-    	
+
     	console.log('add dataset', hashtag);
     }
 
@@ -86,7 +119,7 @@ $(function(){
     	var hashtagElement = event.target.parentNode.parentNode;
     	var hashtag = hashtagElement.textContent;
     	console.log('delete dataset', hashtag);
-    	
+
     }
 
     //random color generator
