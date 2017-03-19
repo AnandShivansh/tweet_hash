@@ -2,6 +2,8 @@
 var Dashboard = function(){
 
 	//Hashtag array
+	var self = this;
+
 	this.hashtags = [];
 
 	//Hashtags list section
@@ -58,7 +60,7 @@ var Dashboard = function(){
 			console.log('ajax ok!');
 			//data parsed from JSON into Objects
 			//Set hashtags array equal to database
-			hashtags = data;
+			self.hashtags = data;
 			console.log('json retrieved: ', hashtags);
 
 			render();

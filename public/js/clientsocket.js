@@ -92,6 +92,7 @@ $(function(){
     	//Add dataset for each hashtag currently tracked
     	dashboard.hashtags.forEach(function(hashtag){
 
+
     		var newDataset = {
 	    		label: hashtag,
 	    		borderColor: randomColor(),
