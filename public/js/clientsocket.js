@@ -66,9 +66,12 @@ $(function(){
 		    	// lineChart.data.datasets[i].label =
 
 		    	//add count
-		    	dataPoint[index].data[0]++
+		    	if (dataPoint[index].data.length <= 0) {
+                        dataPoint[index].data.push(0)
+                    } else {
+                        dataPoint[index].data[0] = dataPoint[index].data[0] + 1
+                    }
 		    	lineChart.update();
-                console.log(dataPoint[index].data);
 	    	}
     	})
     }
@@ -112,8 +115,15 @@ $(function(){
     	event.preventDefault();
     	var hashtagElement = event.target.parentNode.parentNode;
     	var hashtag = hashtagElement.textContent;
-    	console.log('delete dataset', dashboard.hashtag);
+    	console.log('delete dataset', hashtag);
 
+        //loop through dataset, delete matching dataset
+        lineChart.data.datasets.forEach(function(dataset, index){
+            if(hashtag === dataset.label){
+                lineChart.data.datasets[index].splice(index, 1);
+                console.log('deleted dataset: ', lineChart.data.datasets[index]);
+            }
+        })
     }
 
     //random color generator

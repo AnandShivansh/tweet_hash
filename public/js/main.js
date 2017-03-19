@@ -121,7 +121,7 @@ var Dashboard = function(){
 
 			console.log('ajax delete ok', data);
 			listHashtags();
-			console.log(listHashtags);
+			
 		})
 	}
 
