@@ -75,8 +75,8 @@ var currentLabels = [];
 	    	if (dataset.label === response.matchingHashtag){
 		    	// lineChart.data.labels[i] = 
 		    	// lineChart.data.datasets[i].label =
-
-				var label = generateLabel(response.tweet.created)
+                console.log(response.tweet.created)
+				var label = generateLabel(new Date(response.tweet.created))
 				
 				if (currentLabels.indexOf(label) < 0){
 					console.log("ADD LABEL")
