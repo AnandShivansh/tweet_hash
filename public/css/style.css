@@ -84,6 +84,15 @@ main {
 }
 
 /* * *
+ *  Chart styling
+ * * */
+
+ #chart-container {
+  width: 75%;
+  margin: auto;
+ }
+
+/* * *
  *  Footer styling
  * * */
 

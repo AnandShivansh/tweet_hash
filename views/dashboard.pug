@@ -19,7 +19,8 @@ block content
 					span.glyphicon.glyphicon-trash(aria-hidden='true')
 
 		// --ChartJS--
-		canvas#myChart(width='600', height='400')
+		#chart-container
+			canvas#lineChart(width='800', height='400')
 
 	script(src='/js/main.js')
 	script(src='/js/clientsocket.js')

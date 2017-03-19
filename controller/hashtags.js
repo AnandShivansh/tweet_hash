@@ -12,6 +12,7 @@ module.exports = function(app, io){
 	// Read hashtags route
 	app.get('/hashtag', function(req, res){
 
+		//user ID
 		var userIdProp = req.user['_id'];
 
 		//find all hashtags that the user has inputted
@@ -26,28 +27,62 @@ module.exports = function(app, io){
 	// Delete hashtag route
 	app.delete('/hashtag/:id', function(req, res){
 
+		//user ID > stringify
+		var userIdProp = req.user['_id'].toHexString();
+
 		//Retrieve hashtag user clicked on
 		var id = decodeURIComponent(req.params.id);
-		
-		//Delete hashtag from DB
-		Hashtag.remove({'tag': id}, function(err, hashtag){
-			if(err){
-				return console.log(err);
+
+		//Check if more than one user is tracking hashtag
+		Hashtag.findOne({'tag': id}, function(err, hashtag){
+
+			console.log('hashtag selected: ', hashtag.users);
+			console.log('userIdProp', userIdProp);
+			//If more than one user in hashtag.user
+			if (hashtag.users.length > 1){
+
+				//find user and delete user from hashtag.user
+				hashtag.users.forEach(function(user, index){
+					if (user.toHexString() == userIdProp){
+						//splice the userIdProp
+						hashtag.users.splice(index, 1);
+						console.log('spliced user', user);
+					}
+				})
+				
+				//update hashtag.user to DB
+				hashtag.save(function(err, hashtag){
+					if(err){
+						return console.log(err);
+					}
+
+					console.log('final result: ', hashtag.users);
+					res.json(hashtag);
+				})
+
+			//If only one user is tracking the hashtag, delete entirely
+			} else if (hashtag.users.length === 1){
+
+				//Delete hashtag from DB
+				Hashtag.remove({'tag': id}, function(err, hashtag){
+					if(err){
+						return console.log(err);
+					}
+					console.log('Removed hashtag from db');
+					res.json(hashtag);
+
+					//Update Twitter Stream hashtag filter
+					Hashtag.distinct('tag', function(err, hashtagFilter){
+						if(err){
+							return console.log(err);
+						}
+
+						//Close twitter stream api if open, and reopen with new hashtag filter
+						console.log('hashtagfilter from mongoose: ', hashtagFilter);
+						tweet.twitterStream(hashtagFilter, io);
+					})
+				})
 			}
-			console.log('Removed hashtag from db');
-			res.json(hashtag);
-
-			//Update Twitter Stream hashtag filter
-			Hashtag.distinct('tag', function(err, hashtagFilter){
-				if(err){
-					return console.log(err);
-				}
-
-				//Close twitter stream api if open, and reopen with new hashtag filter
-				console.log('hashtagfilter from mongoose: ', hashtagFilter);
-				tweet.twitterStream(hashtagFilter, io);
-			})
-
 		})
 	})
 
