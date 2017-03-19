@@ -23,8 +23,9 @@ module.exports = function(app, passport){
 		console.log('***console logging req.user:*** \n' + req.user);
 		if(req.user){
 		res.render('dashboard', {});
-		} else {
-		res.send('please login');
+	} else {
+		res.redirect('/');
+		// res.send('please login');
 		}
 	});
 
