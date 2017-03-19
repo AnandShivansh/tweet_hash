@@ -74,19 +74,16 @@ $(function(){
 
     }
 
- //    function getAllDays() {
-	//     var s = new Date('start date');
-	//     var e = new Date('end date');
-	//     var a = [];
-	    
-	//     while(s < e) {
-	//         a.push(s);
-	//         s = new Date(s.setDate(
-	//             s.getDate() + 1
-	//         ))
-	//     }
-	//     return a;
-	// };	
+	// var date = new Date('Sun Feb 10 17:22:56 +0000 2017');
+
+	// var locale = "en-us";
+	// var month = date.toLocaleString(locale, { month: "short" });
+	// var day = date.getDate().toString();
+	// var hour = date.getHours().toString();
+	// var min = date.getMinutes().toString();
+	// var label = month + " " + day + " " + hour + ":" + min;
+
+	// console.log(label)
 
     //Initiate chart on user login
     function initChart(){
