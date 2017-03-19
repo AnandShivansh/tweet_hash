@@ -107,17 +107,18 @@ var currentLabels = [];
     	})
     }
 
-    function addDataset(){
-    	event.preventDefault();
+    function addDataset(hashtag){
 
-        // var newDataset = {
-        //     label: 
-        //     borderColor: randomColor(),
-        //     fill: false,
-        //     data: []
-        // }
+        var newDataset = {
+            label: hashtag.tag,
+            borderColor: randomColor(),
+            fill: false,
+            data: []
+        }
 
-    	console.log('add dataset', dashboard.hashtag);
+        lineChart.data.datasets.push(newDataset);
+        lineChart.update();
+    	console.log('add dataset', lineChart.data.datasets);
     }
 
     function deleteDataset(){
