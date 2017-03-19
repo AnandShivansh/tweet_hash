@@ -39,8 +39,8 @@ var currentLabels = [];
     var date = new Date();
     
     for(var i = 0; i<10; i++){
-        currentLabels.push(generateLabel(date));    
-        date.setMinutes(date.getMinutes() + 15);
+        currentLabels.push(generateLabel(date));
+        date.setMinutes(date.getMinutes() + 5);
     }
     
     
@@ -75,6 +75,14 @@ var currentLabels = [];
 	    	if (dataset.label === response.matchingHashtag){
 		    	// lineChart.data.labels[i] = 
 		    	// lineChart.data.datasets[i].label =
+
+				var label = generateLabel(response.tweet.created)
+				
+				if (currentLabels.indexOf(label) < 0){
+					console.log("ADD LABEL")
+					// ADD 'label' into dataSet-Labels and currentLabels.
+				}
+
 
 		    	//add count
 		    	if (dataPoint[index].data.length <= 0) {
