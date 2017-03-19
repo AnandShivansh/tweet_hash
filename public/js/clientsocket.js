@@ -61,6 +61,10 @@ $(function(){
     //
     function initChart(newTweet){
     	console.log('add dataset: ', newTweet);
+
+    	//hashtags user is tracking
+    	dashboard.hashtags
+
     	//new dataset
     	var newDataset = {
     		// label:
@@ -71,14 +75,18 @@ $(function(){
     	data.datasets.push(newDataset);
     }
 
-    function addDataset(hashtag){
-
+    function addDataset(){
+    	event.preventDefault();
+    	
+    	console.log('add dataset', hashtag);
     }
 
-    function deleteDataset(hashtag){
+    function deleteDataset(){
     	event.preventDefault();
+    	var hashtagElement = event.target.parentNode.parentNode;
+    	var hashtag = hashtagElement.textContent;
     	console.log('delete dataset', hashtag);
-
+    	
     }
 
     //random color generator
