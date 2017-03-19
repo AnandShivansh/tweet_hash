@@ -15,7 +15,7 @@ var Dashboard = function(){
 
 		$('#hashtagsBox').html('');
 		//append user hashtags to list
-		hashtags.forEach(function(hashtag){
+		self.hashtags.forEach(function(hashtag){
 			var hashtagHTML = hashtagTemplate;
 			hashtagHTML = hashtagHTML.replace("{{hashtagName}}", hashtag.tag);
 			hashtagHTML = hashtagHTML.replace("{{id}}", hashtag._id);
@@ -61,7 +61,11 @@ var Dashboard = function(){
 			//data parsed from JSON into Objects
 			//Set hashtags array equal to database
 			self.hashtags = data;
-			console.log('json retrieved: ', hashtags);
+			console.log('json retrieved: ', self.hashtags);
+
+			if(lineChart.data.datasets.length === '0'){
+				initChart();
+			}
 
 			render();
 		});
@@ -139,6 +143,7 @@ var Dashboard = function(){
 	function init(){
 		eventListeners();
 		listHashtags();
+		console.log('main.js finished loading');
 	}
 
 init();
@@ -148,3 +153,4 @@ init();
 
 	console.log('client side JS connected!');
 	var dashboard = new Dashboard();
+

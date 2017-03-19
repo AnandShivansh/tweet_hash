@@ -1,5 +1,5 @@
 //Socket.io event listeners
-$(function(){
+$(function(){   
 
 	//io.connect('http://localhost:3000')
 	var socket = io();
@@ -15,7 +15,7 @@ $(function(){
 
 });
 		
-	
+
 // ChartJS
 //var Chart = function(){
 
@@ -58,7 +58,7 @@ $(function(){
     	var dataPoint = lineChart.data.datasets.data;
 
 		// Loop over array to match hashtag with label
-    	data.datasets.forEach(function(dataset, index){
+    	lineChart.data.datasets.forEach(function(dataset, index){
 
     		//update dataset for matching hashtag
 	    	if (dataset === response.matchingHashtag){
@@ -92,9 +92,8 @@ $(function(){
     	//Add dataset for each hashtag currently tracked
     	dashboard.hashtags.forEach(function(hashtag){
 
-
     		var newDataset = {
-	    		label: hashtag,
+	    		label: hashtag.tag,
 	    		borderColor: randomColor(),
 	    		fill: false,
 	    		data: []
@@ -103,8 +102,6 @@ $(function(){
     		lineChart.update();
     	})
     }
-
-    initChart();
 
     function addDataset(){
     	event.preventDefault();
@@ -131,3 +128,4 @@ $(function(){
 // }
 
 // var chart = new Chart();
+
