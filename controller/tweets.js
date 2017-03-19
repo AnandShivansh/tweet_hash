@@ -21,7 +21,9 @@ var filter = [];
 
 var stream = null;
 
-exports.twitterStream = function(filter){
+//require sockets file
+
+exports.twitterStream = function(filter, io){
 
 	if (stream !== null){
 		stream.stop();
@@ -74,9 +76,8 @@ exports.twitterStream = function(filter){
 							return console.log(err);
 						}
 						console.log('new tweet saved to DB');
-
-						//invoked function to initiate sock.emit?
-
+						io.emit('newTweet', hashtag);
+						console.log('emit test: ', io);
 						})
 					})
 				})

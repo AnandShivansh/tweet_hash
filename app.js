@@ -39,7 +39,7 @@ require('./passport/twitter')(passport);
 
 // Import controllers
 var users = require('./controller/user')(app, passport);
-var hashtags = require('./controller/hashtags')(app);
+var hashtags = require('./controller/hashtags')(app, io);
 var tweet = require('./controller/tweets');
 
 // Routes

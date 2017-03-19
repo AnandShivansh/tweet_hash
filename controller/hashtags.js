@@ -7,7 +7,7 @@ var tweet = require('../controller/tweets');
 
 var stream = null;
 
-module.exports = function(app){
+module.exports = function(app, io){
 
 	// Read hashtags route
 	app.get('/hashtag', function(req, res){
@@ -45,7 +45,7 @@ module.exports = function(app){
 
 				//Close twitter stream api if open, and reopen with new hashtag filter
 				console.log('hashtagfilter from mongoose: ', hashtagFilter);
-				tweet.twitterStream(hashtagFilter);
+				tweet.twitterStream(hashtagFilter, io);
 			})
 
 		})
@@ -124,7 +124,7 @@ module.exports = function(app){
 
 						//Close twitter stream api if open, and reopen with new hashtag filter
 						console.log('hashtagfilter from mongoose: ', hashtagFilter);
-						tweet.twitterStream(hashtagFilter);
+						tweet.twitterStream(hashtagFilter, io);
 
 					});
 				})

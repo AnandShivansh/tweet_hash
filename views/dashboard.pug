@@ -18,8 +18,11 @@ block content
 				button.btn.btn-default.deleteButton(type='button')
 					span.glyphicon.glyphicon-trash(aria-hidden='true')
 
-	script(src='/js/main.js')
+		// --ChartJS--
+		canvas#myChart(width='600', height='400')
 
+	script(src='/js/main.js')
+	script(src='/js/clientsocket.js')
 	
 	
 	

@@ -20,6 +20,12 @@ $(function(){
 		
 	
 
+
+
+
+
+	
+
 	//Listening for event from server
 	socket.on('fromServer', function(data){
 		console.log(data);
