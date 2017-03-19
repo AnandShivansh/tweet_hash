@@ -23,10 +23,10 @@ var currentLabels = [];
     
     var generateLabel = function(time){
         var locale = "en-us";
-        var month = date.toLocaleString(locale, { month: "short" });
-        var day = date.getDate().toString();
-        var hour = date.getHours().toString();
-        var min = date.getMinutes().toString();
+        var month = time.toLocaleString(locale, { month: "short" });
+        var day = time.getDate().toString();
+        var hour = time.getHours().toString();
+        var min = time.getMinutes().toString();
         min = (Math.round(min/5) * 5) % 60;
         if (min.toString().length == 1){
             min = '0' + min
@@ -80,11 +80,15 @@ var currentLabels = [];
 				
 				if (currentLabels.indexOf(label) < 0){
 					console.log("ADD LABEL")
+                    TODO
+                    // TODO
 					// ADD 'label' into dataSet-Labels and currentLabels.
+                    // just push it in.
 				}
 
 
 		    	//add count
+                // Fix NaN issue
 		    	if (dataPoint[index].data.length <= 0) {
                         dataPoint[index].data.push(0)
                     } else {
