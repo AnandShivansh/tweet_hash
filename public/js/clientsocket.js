@@ -66,12 +66,11 @@ $(function(){
 		    	// lineChart.data.datasets[i].label =
 
 		    	//add count
-		    	dataPoint[index].data[dataPoint.length-1]++
+		    	dataPoint[index].data[0]++
 		    	lineChart.update();
+                console.log(dataPoint[index].data);
 	    	}
     	})
-
-
     }
 
 	// var date = new Date('Sun Feb 10 17:22:56 +0000 2017');
