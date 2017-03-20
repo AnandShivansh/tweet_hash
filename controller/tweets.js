@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Tweet = require('../models/tweet');
 var Hashtag = require('../models/hashtag');
 var apiKey = require('../config.json');
+var moment = require('moment');
 
 console.log("Hello from tweet controller");
 
@@ -50,7 +51,7 @@ exports.twitterStream = function(filter, io){
 	
 				//create tweet objects
 				var newTweet = new Tweet();
-				newTweet.created = tweet.created_at;
+				newTweet.created = moment().format('MMM Do, h:mm a');
 				newTweet.text = tweet.text;
 				newTweet.tag = hashtagFilterNormalised;
 

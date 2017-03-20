@@ -39,11 +39,13 @@ var currentLabels = [];
     var date = new Date();
     
     //generate 10 labels for draft
-    for(var i = 0; i<1; i++){
-        currentLabels.push(generateLabel(date));
-        date.setMinutes(date.getMinutes() + 5);
-    }
-    
+    // for(var i = 0; i<1; i++){
+    //     currentLabels.push(generateLabel(date));
+    //     date.setMinutes(date.getMinutes() + 5);
+    // }
+
+    currentLabels.push(moment().format('MMM Do, h:mm a'));
+
     
     var data = {
         labels: currentLabels,
@@ -86,7 +88,7 @@ var currentLabels = [];
 	    	if (dataset.label === response.matchingHashtag){
 
                 //create time label
-				var newLabel = generateLabel(new Date(response.tweet.created));
+				var newLabel = response.tweet.created;
 				
                 //if latest label time does not match datapoint to be plotted,
                 //generate a new label and push a new element to datapoint array
@@ -126,11 +128,31 @@ var currentLabels = [];
 		    	lineChart.update();
 	    	}
     	})
+
+        //clear out unused x-axis
+
+            //check within each dataset.data
+            //If ALL the first element in dataset.data === null, then slice data and currentLabels
+
     }
 
     //Initiate chart on user login
-    function initChart(){
+    function initChart(userHashtags){
     	console.log('init chart');
+
+       // //loop through each userHashtags
+       // userHashtags.forEach(function(hashtag){
+       //      //loop through each tweet
+       //      hashtag.tweets.forEach(function(tweet){
+       //          //parse generateLabel function to normalise labels
+       //          var label = generateLabel(tweet.created);
+       //          console.log(label);
+       //      })
+
+
+       // }) 
+
+
 
     	//Add dataset for each hashtag currently tracked
     	dashboard.hashtags.forEach(function(hashtag){
@@ -145,9 +167,10 @@ var currentLabels = [];
     		lineChart.update();
     	})
     }
-
+    
     function addDataset(hashtag){
 
+        //generate a datapoint array with a value pushed to the last index
         var newestDataPoint = [];
         currentLabelsLength = currentLabels.length - 1;
 
@@ -162,7 +185,6 @@ var currentLabels = [];
             borderColor: randomColor(),
             fill: false,
             data: newestDataPoint //to start tracking datapoint on latest currentLabel
-            //generate null values, last element in the array generate 0 value instead
 
         }
 

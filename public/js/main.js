@@ -64,7 +64,7 @@ var Dashboard = function(){
 			console.log('json retrieved: ', self.hashtags);
 
 			if(lineChart.data.datasets.length === 0){
-				initChart();
+				initChart(data);
 			}
 
 			render();
