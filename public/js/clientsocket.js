@@ -27,7 +27,7 @@ var currentLabels = [];
         var day = time.getDate().toString();
         var hour = time.getHours().toString();
         var min = time.getMinutes().toString();
-        min = (Math.round(min/5) * 5) % 60; //round to nearest 5 minutes
+        min = (Math.round(min/1) * 1) % 60; //round to nearest 5 minutes
         if (min.toString().length == 1){ //format minute to always be 2 digits
             min = '0' + min
         }
@@ -148,11 +148,22 @@ var currentLabels = [];
 
     function addDataset(hashtag){
 
+        var newestDataPoint = [];
+        currentLabelsLength = currentLabels.length - 1;
+
+        for(var x = 0; x < currentLabelsLength; x++){
+            newestDataPoint.push(null);
+        }
+
+        newestDataPoint.push(0);
+
         var newDataset = {
             label: hashtag.tag,
             borderColor: randomColor(),
             fill: false,
-            data: [] //to start tracking datapoint on latest currentLabel
+            data: newestDataPoint //to start tracking datapoint on latest currentLabel
+            //generate null values, last element in the array generate 0 value instead
+
         }
 
         lineChart.data.datasets.push(newDataset);
