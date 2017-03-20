@@ -55,7 +55,7 @@ var currentLabels = [];
         scales: {
             yAxes: [{
                 ticks: {
-                    fixedStepSize: 5,
+                    // fixedStepSize: 5,
                     min: 0,
                 }
             }]
@@ -79,9 +79,8 @@ var currentLabels = [];
 
     	var dataPoint = lineChart.data.datasets;
 
-
 		// Loop over array to match hashtag with label
-    	lineChart.data.datasets.forEach(function(dataset, index){
+    	dataPoint.forEach(function(dataset, index){
 
     		//update dataset for matching hashtag
 	    	if (dataset.label === response.matchingHashtag){
@@ -99,8 +98,12 @@ var currentLabels = [];
 					// ADD 'label' into dataSet-Labels and currentLabels.
                     currentLabels.push(newLabel);
                     console.log("Add new label", newLabel);
-                    // Shift datapoints to the next element in the array
-                    dataPoint[index].data.push(0);
+
+                    //Shift datapoints for all datasets to the next element in the array
+                    dataPoint.forEach(function(dataset){
+                        dataset.data.push(0);
+                    })
+
                     dataPoint[index].data[dataPoint[index].data.length-1] += 1;
                     console.log('Pushing datapoint');
 				}
@@ -149,7 +152,7 @@ var currentLabels = [];
             label: hashtag.tag,
             borderColor: randomColor(),
             fill: false,
-            data: []
+            data: [] //to start tracking datapoint on latest currentLabel
         }
 
         lineChart.data.datasets.push(newDataset);
