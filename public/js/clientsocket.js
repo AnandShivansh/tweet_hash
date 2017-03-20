@@ -27,18 +27,19 @@ var currentLabels = [];
         var day = time.getDate().toString();
         var hour = time.getHours().toString();
         var min = time.getMinutes().toString();
-        min = (Math.round(min/5) * 5) % 60;
-        if (min.toString().length == 1){
+        min = (Math.round(min/5) * 5) % 60; //round to nearest 5 minutes
+        if (min.toString().length == 1){ //format minute to always be 2 digits
             min = '0' + min
         }
-        hour = min > 52 ? (hour === 23 ? 0 : ++hour) : hour;
+        hour = min > 52 ? (hour === 23 ? 0 : ++hour) : hour; //round off hours
         var label = month + " " + day + " " + hour + ":" + min;
         return label;
     }
     
     var date = new Date();
     
-    for(var i = 0; i<10; i++){
+    //generate 10 labels for draft
+    for(var i = 0; i<1; i++){
         currentLabels.push(generateLabel(date));
         date.setMinutes(date.getMinutes() + 5);
     }
@@ -50,7 +51,17 @@ var currentLabels = [];
     };
 
     var ctx = $('#lineChart');
-    var options = { };
+    var options = { 
+        scales: {
+            yAxes: [{
+                ticks: {
+                    fixedStepSize: 5,
+                    min: 0,
+                }
+            }]
+        }
+    };
+
     var lineChart = new Chart(ctx, {
 	    type: 'line',
 	    data: data,
@@ -68,38 +79,51 @@ var currentLabels = [];
 
     	var dataPoint = lineChart.data.datasets;
 
+
 		// Loop over array to match hashtag with label
     	lineChart.data.datasets.forEach(function(dataset, index){
 
     		//update dataset for matching hashtag
 	    	if (dataset.label === response.matchingHashtag){
-		    	// lineChart.data.labels[i] = 
-		    	// lineChart.data.datasets[i].label =
-                console.log(response.tweet.created)
-				var label = generateLabel(new Date(response.tweet.created))
+
+                //create time label
+				var newLabel = generateLabel(new Date(response.tweet.created));
 				
-				if (currentLabels.indexOf(label) < 0){
-					console.log("ADD LABEL")
-                    TODO
-                    // TODO
+                //if latest label time does not match datapoint to be plotted,
+                //generate a new label and push a new element to datapoint array
+				if (currentLabels.indexOf(newLabel) < 0){
+					
+//if label is found is currentLabel, add existing
+//if no lable is found in currentLabel, add new label
+
 					// ADD 'label' into dataSet-Labels and currentLabels.
-                    // just push it in.
+                    currentLabels.push(newLabel);
+                    console.log("Add new label", newLabel);
+                    // Shift datapoints to the next element in the array
+                    dataPoint[index].data.push(0);
+                    dataPoint[index].data[dataPoint[index].data.length-1] += 1;
+                    console.log('Pushing datapoint');
 				}
 
+                //if latest label time matches datapoint to be plotted,
+                //simply add count to last element of datapoint array
+                else{
 
-		    	//add count
-                // Fix NaN issue
-		    	if (dataPoint[index].data.length <= 0) {
-                        dataPoint[index].data.push(0)
+    		    	//add count
+                    // Fix NaN issue
+    		    	if (dataPoint[index].data.length <= 0) {
+                        console.log('pushing datapoint');
+                        dataPoint[index].data.push(0);
+                        dataPoint[index].data[dataPoint[index].data.length-1] += 1;
                     } else {
-                        dataPoint[index].data[0] = dataPoint[index].data[0] + 1
+                        console.log('adding count to existing datapoint');
+                        dataPoint[index].data[dataPoint[index].data.length-1] += 1;
                     }
+                }
 		    	lineChart.update();
 	    	}
     	})
     }
-
-
 
     //Initiate chart on user login
     function initChart(){
@@ -112,7 +136,7 @@ var currentLabels = [];
 	    		label: hashtag.tag,
 	    		borderColor: randomColor(),
 	    		fill: false,
-	    		data: []
+	    		data: [] //to edit so that it will retrieve past data in DB
     		}
     		lineChart.data.datasets.push(newDataset);
     		lineChart.update();
