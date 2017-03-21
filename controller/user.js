@@ -2,9 +2,9 @@
 module.exports = function(app, passport){
 
 	// Create user page
-	app.get('/create_user', function(req, res){
-		res.render('create_user', {});
-	});
+	// app.get('/create_user', function(req, res){
+	// 	res.render('create_user', {});
+	// });
 
 	// Login
 	app.post('/', passport.authenticate('local-login', {
@@ -12,12 +12,6 @@ module.exports = function(app, passport){
 		successRedirect : '/dashboard',
 		failureRedirect : '/error'
 	}));
-
-	// logout
-	app.get('/logout', function(req, res){
-		req.logout();
-		res.redirect('/');
- 	});
 
 	// Dashboard
 	app.get('/dashboard', function(req, res){

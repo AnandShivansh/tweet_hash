@@ -27,9 +27,11 @@
     "mongoose": "^4.8.6",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "pug": "^2.0.0-beta11",
     "socket.io": "^1.7.3",
-    "twit": "^2.2.5"
+    "twit": "^2.2.5",
+    "validator": "^7.0.0"
   }
 }

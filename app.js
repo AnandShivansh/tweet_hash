@@ -34,7 +34,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Setup strategies
-//require('./passport/local')(passport);
+require('./passport/local')(passport);
 require('./passport/twitter')(passport);
 
 // Import controllers
