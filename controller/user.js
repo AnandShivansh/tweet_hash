@@ -1,3 +1,4 @@
+
 module.exports = function(app, passport){
 
 	// Create user page
@@ -18,7 +19,7 @@ module.exports = function(app, passport){
 		res.redirect('/');
  	});
 
-	// Secret
+	// Dashboard
 	app.get('/dashboard', function(req, res){
 		console.log('***console logging req.user:*** \n' + req.user);
 		if(req.user){
@@ -37,5 +38,10 @@ module.exports = function(app, passport){
 		failureRedirect: '/error'
 	}));
 
+	// logout
+ 	app.get('/logout', function(req, res){
+   		req.logout();
+   		res.redirect('/');
+ 	});
 
 }; 

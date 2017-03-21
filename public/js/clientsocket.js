@@ -7,7 +7,9 @@ $(function(){
 
 	//Listening for new tweets
 	socket.on('newData', function(response){
-		updateData(response);
+        if(response !== undefined){
+		  updateData(response);
+        }
 	})
 
 	//Listening for hashtags to track
@@ -44,7 +46,7 @@ var currentLabels = [];
     //     date.setMinutes(date.getMinutes() + 5);
     // }
 
-    currentLabels.push(moment().format('MMM Do, h:mm a'));
+    //currentLabels.push(moment().format('MMM D h:mm a'));
 
     
     var data = {
@@ -58,7 +60,7 @@ var currentLabels = [];
             yAxes: [{
                 ticks: {
                     // fixedStepSize: 5,
-                    min: 0,
+                    beginAtZero: true
                 }
             }]
         }
@@ -69,11 +71,6 @@ var currentLabels = [];
 	    data: data,
 	    options: options
 	});
-
-	// response = {
-	// matchingHashtag: hashtag.tag,
-	// tweet: newTweet
-	// }
 
     //update Data whenever incoming tweet saved
     function updateData(response){
@@ -94,9 +91,6 @@ var currentLabels = [];
                 //generate a new label and push a new element to datapoint array
 				if (currentLabels.indexOf(newLabel) < 0){
 					
-//if label is found is currentLabel, add existing
-//if no lable is found in currentLabel, add new label
-
 					// ADD 'label' into dataSet-Labels and currentLabels.
                     currentLabels.push(newLabel);
                     console.log("Add new label", newLabel);
@@ -139,53 +133,90 @@ var currentLabels = [];
     //Initiate chart on user login
     function initChart(userHashtags){
     	console.log('init chart');
+        console.log('userHashtags: ', userHashtags);
 
-       // //loop through each userHashtags
-       // userHashtags.forEach(function(hashtag){
-       //      //loop through each tweet
-       //      hashtag.tweets.forEach(function(tweet){
-       //          //parse generateLabel function to normalise labels
-       //          var label = generateLabel(tweet.created);
-       //          console.log(label);
-       //      })
+        //loop through all userHashtags.tweets
+        userHashtags.forEach(function(hashtag){
+            hashtag.tweets.forEach(function(tweet){
 
+                //push to currentLabels if label is unique
+                if(currentLabels.indexOf(tweet.created) < 0){
+                    currentLabels.push(tweet.created);
+                }
+            }) 
+        })
 
-       // }) 
+        //sort dates for currentLabels
+        currentLabels.sort(function(a,b){
+        // Turn strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        return new Date(a) - new Date(b);
+        });
 
+        //Add dataset for each hashtag currently tracked
+        userHashtags.forEach(function(hashtag){
+            console.log('generating new dataset: ', hashtag);
 
+            var datapoint = [];
 
-    	//Add dataset for each hashtag currently tracked
-    	dashboard.hashtags.forEach(function(hashtag){
+           //generate dataset.data length to match currentLabels length
+            for (var x = 0; x < currentLabels.length; x++){
+                datapoint.push(0);
+            }
 
-    		var newDataset = {
-	    		label: hashtag.tag,
-	    		borderColor: randomColor(),
-	    		fill: false,
-	    		data: [] //to edit so that it will retrieve past data in DB
-    		}
-    		lineChart.data.datasets.push(newDataset);
-    		lineChart.update();
-    	})
+            var newDataset = {
+                label: hashtag.tag,
+                borderColor: randomColor(),
+                fill: false,
+                data: datapoint, 
+                borderWidth: 2.5,
+                pointRadius: 1
+            }
+
+            lineChart.data.datasets.push(newDataset);
+            
+        })
+
+        //loop through each userHashtag.tweets
+        userHashtags.forEach(function(hashtag){
+            hashtag.tweets.forEach(function(tweet){
+
+                //find matching index
+                var labelIndex = currentLabels.indexOf(tweet.created);
+
+                //find matching dataset with tag
+                lineChart.data.datasets.forEach(function(dataset){
+                    if(dataset.label === hashtag.tag){
+
+                        //push to matching dataset according to index
+                        dataset.data[labelIndex] += 1;
+                    }
+                })
+           
+            })
+            lineChart.update();
+       }) 
+        
     }
     
+    //Adding dataset after init
     function addDataset(hashtag){
 
         //generate a datapoint array with a value pushed to the last index
         var newestDataPoint = [];
-        currentLabelsLength = currentLabels.length - 1;
+        currentLabelsLength = currentLabels.length;
 
         for(var x = 0; x < currentLabelsLength; x++){
             newestDataPoint.push(null);
         }
 
-        newestDataPoint.push(0);
+        //newestDataPoint.push(0);
 
         var newDataset = {
             label: hashtag.tag,
             borderColor: randomColor(),
             fill: false,
             data: newestDataPoint //to start tracking datapoint on latest currentLabel
-
         }
 
         lineChart.data.datasets.push(newDataset);
@@ -193,8 +224,8 @@ var currentLabels = [];
     	console.log('add dataset', lineChart.data.datasets);
     }
 
+    //Delete hashtag dataset
     function deleteDataset(){
-    	event.preventDefault();
     	var hashtagElement = event.target.parentNode.parentNode;
     	var hashtag = hashtagElement.textContent;
 

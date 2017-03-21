@@ -96,9 +96,6 @@ var Dashboard = function(){
 				//add dataset to chart
 				addDataset(data);
 
-			//Ajax post request to initiate Twitter REST API search (past 7 days)
-
-
 			})
 
 		}

@@ -5,7 +5,7 @@ var tweet = require('../controller/tweets');
 
 
 
-var stream = null;
+var stream = false;
 
 module.exports = function(app, io){
 
@@ -22,6 +22,20 @@ module.exports = function(app, io){
 			}
 			res.json(hashtag);
 		})
+
+		if (stream === false){
+			//Activate Twitter stream upon initial visit of dashboard
+			Hashtag.distinct('tag', function(err, hashtagFilter){
+				if(err){
+					return console.log(err);
+				}
+
+				//Close twitter stream api if open, and reopen with new hashtag filter
+				console.log('hashtagfilter from mongoose: ', hashtagFilter);
+				tweet.twitterStream(hashtagFilter, io);
+				stream = true;
+			})
+		}
 	})
 
 	// Delete hashtag route
@@ -80,6 +94,7 @@ module.exports = function(app, io){
 						//Close twitter stream api if open, and reopen with new hashtag filter
 						console.log('hashtagfilter from mongoose: ', hashtagFilter);
 						tweet.twitterStream(hashtagFilter, io);
+						stream = true;
 					})
 				})
 			}
@@ -160,9 +175,15 @@ module.exports = function(app, io){
 						//Close twitter stream api if open, and reopen with new hashtag filter
 						console.log('hashtagfilter from mongoose: ', hashtagFilter);
 						tweet.twitterStream(hashtagFilter, io);
-
+						stream = true;
 					});
 				})
+
+				//Call twitter search api
+				// T.get('search/tweets', { q: 'banana' + ' since:'2011-07-11', count: 100 }, function(err, data, response) {
+				//   console.log(data)
+				// })
+
 			}
 		})
 	})

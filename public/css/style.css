@@ -92,6 +92,19 @@ main {
   margin: auto;
  }
 
+ /* * *
+ *  Logout
+ * * */
+
+ #logout {
+  text-align: right;
+  padding-left: 12.5%;
+  padding-right: 12.5%;
+  padding-bottom: 2em;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
 /* * *
  *  Footer styling
  * * */

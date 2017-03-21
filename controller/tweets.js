@@ -51,7 +51,7 @@ exports.twitterStream = function(filter, io){
 	
 				//create tweet objects
 				var newTweet = new Tweet();
-				newTweet.created = moment().format('MMM Do, h:mm a');
+				newTweet.created = moment().format('MMM D h:mm a');
 				newTweet.text = tweet.text;
 				newTweet.tag = hashtagFilterNormalised;
 
