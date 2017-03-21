@@ -23,20 +23,20 @@ $(function(){
 
 var currentLabels = [];
     
-    var generateLabel = function(time){
-        var locale = "en-us";
-        var month = time.toLocaleString(locale, { month: "short" });
-        var day = time.getDate().toString();
-        var hour = time.getHours().toString();
-        var min = time.getMinutes().toString();
-        min = (Math.round(min/1) * 1) % 60; //round to nearest 5 minutes
-        if (min.toString().length == 1){ //format minute to always be 2 digits
-            min = '0' + min
-        }
-        hour = min > 52 ? (hour === 23 ? 0 : ++hour) : hour; //round off hours
-        var label = month + " " + day + " " + hour + ":" + min;
-        return label;
-    }
+    // var generateLabel = function(time){
+    //     var locale = "en-us";
+    //     var month = time.toLocaleString(locale, { month: "short" });
+    //     var day = time.getDate().toString();
+    //     var hour = time.getHours().toString();
+    //     var min = time.getMinutes().toString();
+    //     min = (Math.round(min/1) * 1) % 60; //round to nearest 5 minutes
+    //     if (min.toString().length == 1){ //format minute to always be 2 digits
+    //         min = '0' + min
+    //     }
+    //     hour = min > 52 ? (hour === 23 ? 0 : ++hour) : hour; //round off hours
+    //     var label = month + " " + day + " " + hour + ":" + min;
+    //     return label;
+    // }
     
     var date = new Date();
     
