@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
 var app = express();
-var port = 3000;
+var port = process.env.PORT || 3000;
 
 //Socket.io
 var server = require('http').createServer(app);
@@ -15,7 +15,8 @@ var sockets = require('./sockets/socket')(io);
 
 // Connect with MongoDB
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://heroku_sb7vvvf3:2651unr7rlugoi8gva8asus6dp@ds059165.mlab.com:59165/heroku_sb7vvvf3');
+var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/tweetcount'
+mongoose.connect(uristring);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
