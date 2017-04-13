@@ -15,7 +15,7 @@ var sockets = require('./sockets/socket')(io);
 
 // Connect with MongoDB
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/tweetcount');
+mongoose.connect('mongodb://heroku_sb7vvvf3:2651unr7rlugoi8gva8asus6dp@ds059165.mlab.com:59165/heroku_sb7vvvf3');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use(cookieSession()); 
+//app.use(cookieSession());
 
 // Setup sessions
 app.use(session({ secret: 'tweetcount' }));
