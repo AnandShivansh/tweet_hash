@@ -15,8 +15,14 @@ var sockets = require('./sockets/socket')(io);
 
 // Connect with MongoDB
 var mongoose = require('mongoose');
-var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/tweetcount'
-mongoose.connect(uristring);
+var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/tweetcount';
+mongoose.connect(uristring, function(err, res){
+	if(err){
+		console.log('ERROR connecting to: ' + uristring + '.' + err);
+	} else {
+		console.log('SUCCEEDED connecting to: ' + uristring);
+}
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
