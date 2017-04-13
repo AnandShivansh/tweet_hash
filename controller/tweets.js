@@ -11,10 +11,10 @@ var Twit = require('twit');
 
 //Set api keys and tokens
 var T = new Twit({
-  consumer_key:         apiKey.twitter.consumerKey,
-  consumer_secret:      apiKey.twitter.consumerSecret,
-  access_token:         apiKey.twitter.accessToken,
-  access_token_secret: 	apiKey.twitter.accessTokenSecret,
+  consumer_key:         "RlqpjfF7l1v44852b5u7DM7u0",
+  consumer_secret:      "nMTSF5pBLsasuqITYP5hvEVyV6nj55euopsmUeeLR4AOT3VcHr",
+  access_token:         "18881120-D08ev3AEokvKroVWUC4n5kI2NIQodCqouW6HJNl4u",
+  access_token_secret: 	"CgRKW1tNfouiwNU9SbEis1KkuySVCJUoQMWlmzSHBgnDB"
   timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 })
 
@@ -47,8 +47,8 @@ exports.twitterStream = function(filter, io){
 			if (tweet.entities.hashtags !== undefined){
 				var hashtagFilterNormalised = tweet.entities.hashtags.map(function(hashtag){
 					return '#' + hashtag.text.toLowerCase();
-				})	
-	
+				})
+
 				//create tweet objects
 				var newTweet = new Tweet();
 				newTweet.created = moment().format('MMM D h:mm a');
@@ -64,7 +64,7 @@ exports.twitterStream = function(filter, io){
 
 					//loop through all matching hashtags
 					matchingHashtag.forEach(function(hashtag){
-			
+
 						//push tweets to matching hashtag
 						hashtag.tweets.push(newTweet);
 
