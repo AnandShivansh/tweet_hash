@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
 var app = express();
-var port = process.env.PORT || 3000;
+var port = 3000;
 
 //Socket.io
 var server = require('http').createServer(app);
@@ -59,6 +59,6 @@ app.get('/dashboard', function(req, res){
 })
 
 // Listen for server init
-server.listen(port, function () {
+server.listen(process.env.PORT || port, function () {
   console.log('Server listening at port %d', port);
 })
