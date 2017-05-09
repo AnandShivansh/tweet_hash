@@ -2,7 +2,7 @@ var twitterStrategy = require('passport-twitter').Strategy;
 var User = require( '../models/user');
 var apiKey = require('../config.json');
 
-var callback = 'http://tweet-counter.herokuapp.com/auth/twitter/callback';
+var callback = 'https://tweet-counter.herokuapp.com/auth/twitter/callback';
 
 module.exports = function(passport) {
 
