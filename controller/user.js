@@ -7,10 +7,10 @@ module.exports = function(app, passport){
 	// });
 
 	// Login
-	app.post('/', passport.authenticate('local-login', {
+	app.post('/login', passport.authenticate('local-login', {
 		//when user is found and password is matched
 		successRedirect : '/dashboard',
-		failureRedirect : '/error'
+		failureRedirect : '/error',
 	}));
 
 	// Dashboard
@@ -38,4 +38,4 @@ module.exports = function(app, passport){
    		res.redirect('/');
  	});
 
-}; 
+};

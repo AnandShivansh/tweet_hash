@@ -50,14 +50,14 @@ var hashtags = require('./controller/hashtags')(app, io);
 var tweet = require('./controller/tweets');
 
 // Dummy account for debugging
-var User = require('./models/user');
-var dummyUser = new User();
-dummyUser.email = 'admin@admin.com';
-dummyUser.password = 'admin';
-dummyUser.save(function(err, user){
-	console.log(err);
-	console.log(user);
-	})
+// var User = require('./models/user');
+// var dummyUser = new User();
+// dummyUser.email = 'admin@admin.com';
+// dummyUser.password = 'admin';
+// dummyUser.save(function(err, user){
+// 	console.log(err);
+// 	console.log(user);
+// 	})
 
 // Routes
 app.get('/', function(req, res){

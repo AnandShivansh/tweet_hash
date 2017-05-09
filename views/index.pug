@@ -4,7 +4,7 @@ block content
 	main
 		// --Login Form--
 		.row
-			form.form-signin.mg-btm
+			form.form-signin.mg-btm(action='/login', method='post')
 				h3.heading-desc Please login to TweetCount
 				.social-box
 					.row
@@ -13,45 +13,10 @@ block content
 								i.icon-twitter
 								| Login with Twitter
 				.main
-					input.form-control(type='text', placeholder='Email', autofocus='')
-					input.form-control(type='password', placeholder='Password')
+					input.form-control(type='text', name='email', placeholder='Email', autofocus='')
+					input.form-control(type='password', name='password', placeholder='Password')
 					span.clearfix
 				.login-footer
 					.row
-						.col-xs-6.col-md-6
-							.left-section
-
-								// --Button trigger modal--
-								a(href='', data-toggle='modal', data-target='#myModal') Sign up now
-
-
-								// --Modal--
-								#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
-									.modal-dialog(role='document')
-										.modal-content
-											.modal-header
-												button.close(type='button', data-dismiss='modal', aria-label='Close')
-													span(aria-hidden='true') ×
-												h4#myModalLabel.modal-title Sign up
-
-											.modal-body
-												form.form-horizontal(role='form')
-
-													.form-group
-														label.col-sm-2.control-label(for='inputEmail') Email
-														.col-sm-10
-															input#inputEmail.form-control(type='email', placeholder='Email')
-
-													.form-group
-														label.col-sm-2.control-label(for='inputPassword') Password
-														.col-sm-10
-															input#inputPassword.form-control(type='password', placeholder='Password')
-													.form-group
-														.col-sm-offset-2.col-sm-10
-															button.btn.btn-default(type='submit') Sign in
-
-											.modal-footer
-												button.btn.btn-primary(type='button' data-dismiss='modal') Close
-
 						.col-xs-6.col-md-6.pull-right
 							button.btn.btn-large.btn-primary.pull-right(type='submit') Login
