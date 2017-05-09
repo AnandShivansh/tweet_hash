@@ -2,7 +2,7 @@ var twitterStrategy = require('passport-twitter').Strategy;
 var User = require( '../models/user');
 var apiKey = require('../config.json');
 
-var callback = 'http://127.0.01.:3000/auth/twitter/callback';
+var callback = 'http://tweet-counter.herokuapp.com/auth/twitter/callback';
 
 module.exports = function(passport) {
 
@@ -49,9 +49,9 @@ module.exports = function(passport) {
 							console.log('*** newUser Twitter created ***\n', newUser, '\n*************');
 							//login new user
 							return cb(null, newUser);
-						});	
+						});
 
-					//If user email in the database, merge twitter data into user				
+					//If user email in the database, merge twitter data into user
 					} else {
 						//merge twitter data to existing user
 						console.log('*** user exists, merge twitter data to user ***');
@@ -64,7 +64,7 @@ module.exports = function(passport) {
 						user.save(function(err, user){
 							if(err){
 								console.log(err);
-							}	
+							}
 								//login user
 								return cb(null, user);
 
@@ -72,7 +72,7 @@ module.exports = function(passport) {
 
 					}
 				})
-	
+
 			}
 
 		));
