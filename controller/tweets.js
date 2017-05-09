@@ -11,10 +11,10 @@ var Twit = require('twit');
 
 //Set api keys and tokens
 var T = new Twit({
-  consumer_key:         "RlqpjfF7l1v44852b5u7DM7u0",
-  consumer_secret:      "nMTSF5pBLsasuqITYP5hvEVyV6nj55euopsmUeeLR4AOT3VcHr",
-  access_token:         "18881120-D08ev3AEokvKroVWUC4n5kI2NIQodCqouW6HJNl4u",
-  access_token_secret: 	"CgRKW1tNfouiwNU9SbEis1KkuySVCJUoQMWlmzSHBgnDB",
+  consumer_key:         apiKey.twitter.consumerKey,
+  consumer_secret:      apiKey.twitter.consumerSecret,
+  access_token:         apiKey.twitter.accessToken,
+  access_token_secret: 	apiKey.twitter.accessTokenSecret,
   timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 })
 

@@ -35,5 +35,8 @@
     "socket.io": "^1.7.3",
     "twit": "^2.2.5",
     "validator": "^7.0.0"
+  },
+  "engines": {
+    "node": "7.6.0"
   }
 }

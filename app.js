@@ -15,7 +15,7 @@ var sockets = require('./sockets/socket')(io);
 
 // Connect with MongoDB
 var mongoose = require('mongoose');
-var uristring = process.env.MONGODB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/tweetcount';
+var uristring = process.env.MONGODB_URI || 'mongodb://localhost/tweetcount';
 mongoose.connect(uristring, function(err, res){
 	if(err){
 		console.log('ERROR connecting to: ' + uristring + '.' + err);
